@@ -7,6 +7,15 @@ resource "aws_instance" "frontend" {
     Name = "frontend"
   }
 }
+
+resource "aws_route53_record" "frontend" {
+  zone_id = "Z020706829X4VLGA6FBZ1"
+  name    = "frontend-dev-online"
+  type    = "A" #A – Routes traffic to an IPv4 address and some AWS resources
+  ttl     = 30
+  records = [aws_instance.frontend.private_ip] #resource reference
+}
+
 resource "aws_instance" "mongodb" {
   ami           = "ami-0b4f379183e5706b9"
   instance_type = "t3.micro"
@@ -88,4 +97,6 @@ resource "aws_instance" "payment" {
     Name = "payment"
   }
 }
+
+
 
